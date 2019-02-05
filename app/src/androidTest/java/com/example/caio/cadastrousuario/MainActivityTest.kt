@@ -9,7 +9,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.widget.Button
 import android.widget.EditText
-import com.example.caio.cadastrousuario.MainActivity
+import com.example.caio.cadastrousuario.ui.MainActivity
 import com.example.caio.cadastrousuario.R
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.*
@@ -64,7 +64,7 @@ class MainActivityTest {
         // Clica no botao com texto 'Cadastrar'
         onView(withText("Cadastrar")).perform(click())
 
-        val textError = "O usuário deve conter no mínimo 3 caracteres"
+        val textError = MainActivity.ERRO_USUARIO
 
         usuario.check(matches(hasErrorText(textError)))
 
@@ -79,7 +79,7 @@ class MainActivityTest {
 
         onView(withText("Cadastrar")).perform(click())
 
-        val textError = "Email inválido! O email deve conter um @"
+        val textError = MainActivity.ERRO_EMAIL
 
         email.check(matches(hasErrorText(textError)))
 
@@ -95,7 +95,7 @@ class MainActivityTest {
 
         onView(withText("Cadastrar")).perform(click())
 
-        val textError =  "A senha deve conter no mínimo 4 caracteres, não ser uma sequência númerica e conter ao menos um número"
+        val textError =  MainActivity.ERRO_SENHA
 
         senha.check(matches(hasErrorText(textError)))
 
@@ -110,7 +110,7 @@ class MainActivityTest {
 
         onView(withText("Cadastrar")).perform(click())
 
-        val textError =  "A senha deve conter no mínimo 4 caracteres, não ser uma sequência númerica e conter ao menos um número"
+        val textError = MainActivity.ERRO_SENHA
 
         senha.check(matches(hasErrorText(textError)))
 
@@ -125,7 +125,7 @@ class MainActivityTest {
 
         onView(withText("Cadastrar")).perform(click())
 
-        val textError =  "A senha deve conter no mínimo 4 caracteres, não ser uma sequência númerica e conter ao menos um número"
+        val textError = MainActivity.ERRO_SENHA
 
         senha.check(matches(hasErrorText(textError)))
 

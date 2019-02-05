@@ -1,11 +1,30 @@
-package com.example.caio.cadastrousuario
+package com.example.caio.cadastrousuario.ui
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import com.example.caio.cadastrousuario.R
+import com.example.caio.cadastrousuario.viewmodel.CadastroViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+
+        val ERRO_USUARIO = "O usuário deve conter no mínimo 3 caracteres"
+        val ERRO_EMAIL = "Email inválido! O email deve conter um @"
+        val ERRO_SENHA = "A senha deve conter no mínimo 4 caracteres, não ser uma sequência númerica e conter ao menos um número"
+
+    }
+
+    val viewModel by lazy {
+
+        ViewModelProviders.of(this).get(CadastroViewModel::class.java)
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,15 +62,43 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (usuario.length < 3)
-                txtUsuario.error = "O usuário deve conter no mínimo 3 caracteres"
+                txtUsuario.error = ERRO_USUARIO
 
             if (!email.contains("@"))
-                txtEmail.error = "Email inválido! O email deve conter um @"
+                txtEmail.error = ERRO_EMAIL
 
             if (senha.length < 4 || !senha.contains(Regex("[0-9]")) || validarSeq)
-                txtSenha.error = "A senha deve conter no mínimo 4 caracteres, não ser uma sequência númerica e conter ao menos um número"
+                txtSenha.error = ERRO_SENHA
+
+
+            viewModel.cadastrarUsuario()
+
+        }
+
+        viewModel.loading.observe(this, Observer {
+            updateLoading(it)
+        })
+
+    }
+
+    fun updateLoading(loading:Boolean?){
+
+        loading?.let {
+
+            if (loading){
+
+                btnCadastro.visibility = View.GONE
+                progressBar.visibility = View.VISIBLE
+
+            }else{
+
+                btnCadastro.visibility = View.VISIBLE
+                progressBar.visibility = View.GONE
+
+            }
 
         }
 
     }
+
 }
